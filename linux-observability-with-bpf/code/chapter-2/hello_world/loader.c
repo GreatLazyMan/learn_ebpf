@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
       return ret;
   printf("111111111\n");
 
-  // 找到你的 BPF 程序,前面load之后
+  // 找到你的 BPF 程序,前面load之后执行命令 bpftool prog show 可以看到load到内存里的bpf程序
   prog = bpf_object__find_program_by_name(obj, "bpf_prog");
   if (!prog) {
       fprintf(stderr, "Failed to find BPF program\n");
@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
       fprintf(stderr, "Failed to get BPF program FD\n");
       return 1;
   }
-  // 附加 BPF 程序到 kprobe
+  // 附加 BPF 程序到 kprobe, 不同程序 attach 命令不同
   link = bpf_program__attach_kprobe(prog, false, "do_sys_openat2");
   if (libbpf_get_error(link)) {
       fprintf(stderr, "Failed to attach BPF program to kprobe\n");
