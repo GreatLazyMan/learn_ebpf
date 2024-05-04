@@ -43,9 +43,11 @@ bpf.attach_kretprobe(event="bpf_prog_load",
                      fn_name="trace_bpf_prog_load_return")
 
 
-try:
-    sleep(300)
-except KeyboardInterrupt:
-    signal.signal(signal.SIGINT, signal_ignore)
+sleep(30)
+
+#try:
+#    sleep(300)
+#except KeyboardInterrupt:
+#    signal.signal(signal.SIGINT, signal_ignore)
 
 bpf["histogram"].print_log2_hist("msecs")

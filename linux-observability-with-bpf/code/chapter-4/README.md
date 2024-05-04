@@ -1,0 +1,2 @@
+kprobe 在execve调用时执行，在shell中执行任意命令打印出来的程序名都是bash
+kreprobe 在execve结束后执行，在shell中执行命令可以显示真正的命令，如vim/ls等

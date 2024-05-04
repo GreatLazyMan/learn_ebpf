@@ -1,0 +1,24 @@
+#include <linux/if_ether.h>
+#include <linux/ip.h>
+
+int myprogram(struct xdp_md *ctx) {
+    // 获取数据包的开始和结束指针
+    void *data = (void *)(long)ctx->data;
+    void *data_end = (void *)(long)ctx->data_end;
+    struct ethhdr *eth = data;
+
+    // 确保数据包头部不超出数据包的范围
+    if ((void *)eth + sizeof(*eth) <= data_end) {
+        struct iphdr *ip = data + sizeof(*eth);
+        if ((void *)ip + sizeof(*ip) <= data_end) {
+            // 根据 IP 协议类型决定动作
+            if (ip->protocol == 1) {
+                // 如果是 TCP 数据包，则丢弃
+                return XDP_DROP;
+            }
+        }
+    }
+
+    // 默认情况下，允许所有其他数据包通过
+    return XDP_PASS;
+}

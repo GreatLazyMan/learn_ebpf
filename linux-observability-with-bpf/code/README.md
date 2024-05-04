@@ -5,6 +5,7 @@
 
 ```
 apt install clang  linux-tools-$(uname -r) #libbpf-dev 
+apt install gcc-multilib
 apt install linux-headers-`uname -r`
 apt install linux-tools-6.5.0-18-generic bpfcc-tools
 
